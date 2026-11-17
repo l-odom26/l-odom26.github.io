@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Luke Odom | Software Engineer Portfolio</title>
+<meta name="description" content="Portfolio of Luke Odom, a software engineering student at Kennesaw State University. Projects in Kotlin, Spring Boot, React and C.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Luke Odom | Software Engineer Portfolio">
+<meta property="og:description" content="Portfolio of Luke Odom, a software engineering student at Kennesaw State University. Projects in Kotlin, Spring Boot, React and C.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%231f4fd8'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='700' text-anchor='middle' fill='white'%3ELO%3C/text%3E%3C/svg%3E">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+/* Layout concept: an engineering datasheet split into four sheets (Home, Projects, Experience, Contact). Ruled spec tables, mono labels, one cobalt accent. */
+:root {
+  --bg: #eef1f5;
+  --surface: #f8fafc;
+  --fg: #14202b;
+  --muted: #546372;
+  --rule: #c9d2dc;
+  --accent: #1f4fd8;
+  --accent-ink: #ffffff;
+  --accent-soft: #dfe7fb;
+  --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f161d;
+    --surface: #151e27;
+    --fg: #e6ecf2;
+    --muted: #93a3b3;
+    --rule: #2a3744;
+    --accent: #7fa6ff;
+    --accent-ink: #0f161d;
+    --accent-soft: #1d2b49;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f161d;
+  --surface: #151e27;
+  --fg: #e6ecf2;
+  --muted: #93a3b3;
+  --rule: #2a3744;
+  --accent: #7fa6ff;
+  --accent-ink: #0f161d;
+  --accent-soft: #1d2b49;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 880px; margin: 0 auto; }
+
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; margin: 0; line-height: 1.1; }
+p { margin: 0; max-width: 65ch; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+button { font: inherit; color: inherit; }
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Site bar */
+.site { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9; background: var(--bg); border-bottom: 2px solid var(--fg); }
+.bar { max-width: 880px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; padding-block: 10px 0; }
+.brand { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--fg); text-decoration: none; padding-block: 4px; }
+.nav { display: flex; gap: 4px; order: 3; width: 100%; }
+.nav a { flex: 1; text-align: center; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: var(--muted); padding: 10px 6px 8px; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color .2s, border-color .2s; }
+.nav a:hover { color: var(--fg); }
+.nav a[aria-current="page"] { color: var(--fg); border-bottom-color: var(--accent); }
+.theme { background: none; border: 1px solid var(--rule); border-radius: 4px; padding: 4px 10px; font-family: var(--font-mono); font-size: 12px; cursor: pointer; transition: border-color .2s, background .2s; }
+.theme:hover { border-color: var(--accent); background: var(--accent-soft); }
+
+/* Views */
+main { padding-block: 40px 56px; }
+.view { display: grid; gap: 44px; }
+.view > * { min-width: 0; }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 0 var(--accent-soft); } 50% { box-shadow: 0 0 0 6px transparent; } }
+.enter > * { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
+.enter > *:nth-child(2) { animation-delay: .07s; }
+.enter > *:nth-child(3) { animation-delay: .14s; }
+.enter > *:nth-child(4) { animation-delay: .21s; }
+.enter > *:nth-child(5) { animation-delay: .28s; }
+.enter > *:nth-child(6) { animation-delay: .35s; }
+
+section { display: grid; gap: 20px; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-bottom: 1px solid var(--rule); padding-bottom: 8px; }
+.sec-head h2 { font-size: 1.5rem; font-weight: 700; }
+
+/* Hero */
+.hero { display: grid; gap: 20px; }
+.hero h1 { font-size: clamp(2.6rem, 9vw, 4.75rem); font-weight: 700; letter-spacing: -0.02em; }
+.hero .role { font-size: 1.2rem; max-width: 46ch; }
+.status { display: inline-flex; align-items: center; gap: 10px; width: fit-content; max-width: 100%; font-family: var(--font-mono); font-size: 13px; background: var(--accent-soft); color: var(--fg); padding: 6px 12px; border-radius: 4px; }
+.status::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex: none; animation: pulse 2.4s ease-in-out infinite; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-block; font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.04em; text-decoration: none; padding: 10px 16px; border-radius: 4px; border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); cursor: pointer; transition: transform .2s, background .2s, color .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn.ghost { background: transparent; color: var(--accent); }
+.btn.ghost:hover { background: var(--accent-soft); }
+
+/* Stats */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.stat { padding: 16px 16px 16px 0; display: grid; gap: 4px; position: relative; }
+.stat b { font-family: var(--font-display); font-size: 2rem; line-height: 1; }
+.stat::after { content: ""; position: absolute; left: 0; bottom: 0; height: 2px; width: calc(100% - 16px); background: var(--accent); transform-origin: left; animation: grow .9s .4s cubic-bezier(.2,.7,.2,1) both; }
+
+/* Spec tables */
+.spec { display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr); margin: 0; }
+.spec dt, .spec dd { margin: 0; padding: 10px 0; border-bottom: 1px solid var(--rule); }
+.spec dt { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); padding-top: 13px; padding-right: 12px; }
+.spec dd { min-width: 0; overflow-wrap: anywhere; }
+.spec ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px 8px; }
+.tag { font-family: var(--font-mono); font-size: 13px; padding: 2px 8px; border: 1px solid var(--rule); border-radius: 3px; background: var(--surface); }
+button.tag { cursor: pointer; border-color: var(--accent); transition: background .2s, transform .2s; }
+button.tag:hover { background: var(--accent-soft); transform: translateY(-1px); }
+.hint { font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+
+/* Projects */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.chip { font-family: var(--font-mono); font-size: 13px; padding: 5px 12px; border: 1px solid var(--rule); border-radius: 999px; background: transparent; cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.chip:hover { border-color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.count { margin-left: auto; }
+.projects { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.project { background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 22px; display: grid; gap: 14px; align-content: start; min-width: 0; transition: border-color .25s, transform .25s; }
+.project:hover { border-color: var(--accent); transform: translateY(-2px); }
+.project.lead { grid-column: 1 / -1; }
+.project.pop { animation: rise .4s cubic-bezier(.2,.7,.2,1) both; }
+.project h3 { font-size: 1.35rem; font-weight: 700; }
+.project .spec { grid-template-columns: minmax(70px, 96px) minmax(0, 1fr); }
+.project .spec dt, .project .spec dd { padding-block: 8px; }
+.project .spec dt { padding-top: 11px; }
+.project .spec dt:nth-last-of-type(1), .project .spec dd:last-of-type { border-bottom: 0; }
+
+/* Experience */
+.jobs { margin: 0; padding: 0; list-style: none; display: grid; }
+.job { display: grid; grid-template-columns: minmax(96px, 150px) minmax(0, 1fr); padding: 14px 0 14px 14px; border-bottom: 1px solid var(--rule); border-left: 2px solid var(--rule); gap: 4px 0; margin-left: 2px; transition: border-color .25s, background .25s; }
+.job:hover { border-left-color: var(--accent); background: var(--surface); }
+.job .when { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--muted); padding-top: 4px; padding-right: 12px; }
+.job h3 { font-size: 1.05rem; font-weight: 700; }
+.job h3 span { font-family: var(--font-body); font-weight: 400; color: var(--muted); }
+.job p { margin-top: 4px; }
+
+/* Contact */
+.contact a, .contact .mono { font-family: var(--font-mono); font-size: 15px; overflow-wrap: anywhere; }
+.copyrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.copy { background: transparent; color: var(--accent); border: 1px solid var(--accent); border-radius: 4px; padding: 3px 10px; font-family: var(--font-mono); font-size: 12px; cursor: pointer; transition: background .2s; }
+.copy:hover { background: var(--accent-soft); }
+
+footer { max-width: 880px; margin: 0 auto; padding-block: 16px 40px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--rule); }
+
+@media (max-width: 480px) {
+  main { padding-block: 28px 40px; }
+  .view { gap: 36px; }
+  .spec, .project .spec, .job { grid-template-columns: 1fr; }
+  .spec dt { border-bottom: 0; padding-bottom: 0; }
+  .job .when { padding-bottom: 2px; }
+  .project { padding: 18px; }
+  .count { margin-left: 0; width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .btn:hover, .project:hover, button.tag:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="bar">
+    <a class="brand" href="#home" data-nav="home">Luke Odom</a>
+    <button class="theme" id="theme" type="button" aria-label="Switch color theme">Theme</button>
+    <nav class="nav" aria-label="Sections">
+      <a href="#home" data-nav="home">Home</a>
+      <a href="#projects" data-nav="projects">Projects</a>
+      <a href="#experience" data-nav="experience">Experience</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HOME -->
+  <div class="view enter" id="view-home">
+    <div class="hero">
+      <span class="label">Software Engineer · Portfolio</span>
+      <h1>Luke Odom</h1>
+      <p class="role">Software engineering student with a Linux and systems programming foundation and full-stack project experience, including a tested, containerized service deployed with CI.</p>
+      <span class="status">Graduating Dec 2026 · seeking entry-level software engineering roles</span>
+      <div class="cta">
+        <a class="btn" href="#projects" data-nav="projects">See projects</a>
+        <a class="btn ghost" href="#contact" data-nav="contact">Get in touch</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/luke-odom25/" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="stats" role="list">
+      <div class="stat" role="listitem"><b>40+</b><span class="label">Automated tests in CI</span></div>
+      <div class="stat" role="listitem"><b>15+</b><span class="label">Shell edge cases solved</span></div>
+      <div class="stat" role="listitem"><b>4</b><span class="label">REST resources with CRUD</span></div>
+      <div class="stat" role="listitem"><b>~15%</b><span class="label">Faster table turnaround</span></div>
+    </div>
+
+    <section aria-labelledby="about">
+      <div class="sec-head"><h2 id="about">About</h2><span class="label">Profile</span></div>
+      <p>I'm finishing a B.S. in Software Engineering at Kennesaw State University in December 2026. My projects run from low-level system calls in C to a Kotlin and Spring Boot service with automated tests, Docker and CI. I also bring team lead experience and years of customer-facing work, so I communicate clearly with all kinds of people.</p>
+      <dl class="spec">
+        <dt>Education</dt><dd>Kennesaw State University, B.S. in Software Engineering, GPA 3.34/4.0</dd>
+        <dt>Graduation</dt><dd>Expected December 2026</dd>
+        <dt>Location</dt><dd>Kennesaw, Georgia. Open to Atlanta-area or remote roles.</dd>
+      </dl>
+    </section>
+
+    <section aria-labelledby="skills">
+      <div class="sec-head"><h2 id="skills">Skills</h2><span class="hint">Tap a blue-outlined skill to see projects that use it</span></div>
+      <dl class="spec">
+        <dt>Systems</dt><dd><div class="tags"><button class="tag" type="button" data-filter="c">Linux</button><span class="tag">Unix command line</span><button class="tag" type="button" data-filter="c">fork</button><button class="tag" type="button" data-filter="c">execvp</button><button class="tag" type="button" data-filter="c">pipe</button><button class="tag" type="button" data-filter="c">dup2</button></div></dd>
+        <dt>Languages</dt><dd><div class="tags"><span class="tag">Java</span><button class="tag" type="button" data-filter="kotlin">Kotlin</button><button class="tag" type="button" data-filter="c">C</button><span class="tag">C++</span></div></dd>
+        <dt>Web &amp; backend</dt><dd><div class="tags"><button class="tag" type="button" data-filter="react">React (JSX, Vite)</button><span class="tag">HTML/CSS</span><button class="tag" type="button" data-filter="spring-boot">Spring Boot</button><button class="tag" type="button" data-filter="spring-boot">Spring Security (JWT)</button><span class="tag">JPA / Hibernate</span><span class="tag">REST API design</span></div></dd>
+        <dt>Databases</dt><dd><div class="tags"><button class="tag" type="button" data-filter="postgresql">PostgreSQL</button><span class="tag">MySQL</span></div></dd>
+        <dt>Tools</dt><dd><div class="tags"><span class="tag">Git / GitHub</span><button class="tag" type="button" data-filter="docker">Docker</button><span class="tag">GitHub Actions (CI/CD)</span><span class="tag">JUnit</span></div></dd>
+        <dt>Working style</dt><dd>Collaborative team member and independent contributor, self-starter, fast learner, team lead experience</dd>
+      </dl>
+    </section>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="view" id="view-projects" hidden>
+    <section aria-labelledby="projects-h">
+      <div class="sec-head"><h2 id="projects-h">Projects</h2><span class="label">3 selected</span></div>
+      <div class="filters" role="group" aria-label="Filter projects by technology">
+        <button class="chip" type="button" data-chip="all" aria-pressed="true">All</button>
+        <button class="chip" type="button" data-chip="kotlin" aria-pressed="false">Kotlin</button>
+        <button class="chip" type="button" data-chip="spring-boot" aria-pressed="false">Spring Boot</button>
+        <button class="chip" type="button" data-chip="react" aria-pressed="false">React</button>
+        <button class="chip" type="button" data-chip="postgresql" aria-pressed="false">PostgreSQL</button>
+        <button class="chip" type="button" data-chip="docker" aria-pressed="false">Docker</button>
+        <button class="chip" type="button" data-chip="c" aria-pressed="false">C</button>
+        <span class="label count" id="count" aria-live="polite">Showing 3 of 3</span>
+      </div>
+    </section>
+
+    <div class="projects">
+      <article class="project lead" data-tags="kotlin spring-boot postgresql docker">
+        <span class="label">Project A · Backend service</span>
+        <h3>Uptime Monitor</h3>
+        <p>An HTTP uptime monitor that tracks uptime and p95 latency for the sites you point it at, and alerts you on Slack or Discord when one goes down.</p>
+        <dl class="spec">
+          <dt>Stack</dt><dd>Kotlin, Spring Boot, PostgreSQL, Docker, GitHub Actions</dd>
+          <dt>Highlights</dt><dd><ul>
+            <li>Runs checks concurrently on a scheduler with a worker pool, so one slow target never delays the others.</li>
+            <li>A consecutive-failure state machine sends exactly one webhook alert per outage and one on recovery, which prevents noisy alerts.</li>
+            <li>Secured with SSRF protection and Spring Security login, with 40+ automated tests passing in GitHub Actions CI on every push. Deployed with Docker on Render.</li>
+          </ul></dd>
+          <dt>Source</dt><dd><a href="https://github.com/l-odom26/uptime-monitor" rel="noopener">github.com/l-odom26/uptime-monitor</a></dd>
+        </dl>
+      </article>
+
+      <article class="project" data-tags="kotlin spring-boot react postgresql">
+        <span class="label">Project B · Full stack</span>
+        <h3>Finance Tracker</h3>
+        <p>A full-stack app for tracking income, expenses and monthly budgets.</p>
+        <dl class="spec">
+          <dt>Stack</dt><dd>Kotlin, Spring Boot, React, PostgreSQL</dd>
+          <dt>Highlights</dt><dd><ul>
+            <li>Four fully scoped REST resources (auth, transactions, dashboard, budgets) with complete CRUD, backed by JPA/Hibernate and consumed by a React frontend.</li>
+            <li>JWT authentication with a custom request filter and BCrypt password hashing. Every query is scoped to the authenticated user's ID, with zero cross-user data leakage.</li>
+          </ul></dd>
+          <dt>Source</dt><dd><a href="https://github.com/l-odom26/finance-tracker" rel="noopener">github.com/l-odom26/finance-tracker</a></dd>
+        </dl>
+      </article>
+
+      <article class="project" data-tags="c">
+        <span class="label">Project C · Systems</span>
+        <h3>Unix Shell</h3>
+        <p>A functional command shell written in C for Linux, built with incremental git-tracked commits.</p>
+        <dl class="spec">
+          <dt>Stack</dt><dd>C, Linux</dd>
+          <dt>Highlights</dt><dd><ul>
+            <li>Handles 15+ edge cases across piping, redirection and built-ins, and passes 100% of the course test suite.</li>
+            <li>Process control with fork, execvp and waitpid. Chained multi-command pipelines use pipe() and dup2() for correct output.</li>
+          </ul></dd>
+          <dt>Source</dt><dd><a href="https://github.com/l-odom26/my-unix-shell" rel="noopener">github.com/l-odom26/my-unix-shell</a></dd>
+        </dl>
+      </article>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="view" id="view-experience" hidden>
+    <section aria-labelledby="work">
+      <div class="sec-head"><h2 id="work">Work experience</h2><span class="label">Customer-facing, team-based</span></div>
+      <ol class="jobs">
+        <li class="job">
+          <span class="when">Jan 2024 – Present</span>
+          <div>
+            <h3>Server / Bartender <span>· Studio Movie Grill, Marietta, GA</span></h3>
+            <p>Works a high-volume section with real-time communication between guests, kitchen and bar. Cut average table turnaround by about 15% during peak weekend hours by streamlining order handoffs.</p>
+          </div>
+        </li>
+        <li class="job">
+          <span class="when">May 2021 – May 2024</span>
+          <div>
+            <h3>Team Member <span>· Chick-fil-A, Rome, GA</span></h3>
+            <p>Worked with a rotating team of 10+ staff to meet daily performance goals. Kept order accuracy high through rushes above 200 transactions an hour with a personal double-check routine.</p>
+          </div>
+        </li>
+        <li class="job">
+          <span class="when">Jan 2021 – May 2021</span>
+          <div>
+            <h3>Host <span>· Texas Roadhouse, Rome, GA</span></h3>
+            <p>Managed guest seating and wait-time estimates for a high-traffic dining room, and kept perceived waits short through proactive communication.</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="edu">
+      <div class="sec-head"><h2 id="edu">Education &amp; honors</h2><span class="label">Kennesaw State University</span></div>
+      <dl class="spec">
+        <dt>Degree</dt><dd>B.S. in Software Engineering, GPA 3.34/4.0, expected December 2026</dd>
+        <dt>Honors</dt><dd>Dean's List 2025–2026, President's List 2024, National Honor Society 2020–2021, High Honor Roll 2018–2022, District Honor Band 2018 and 2020</dd>
+      </dl>
+    </section>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="view contact" id="view-contact" hidden>
+    <section aria-labelledby="contact-h">
+      <div class="sec-head"><h2 id="contact-h">Contact</h2><span class="label">Open to opportunities</span></div>
+      <p>I'm looking for entry-level software engineering roles starting after graduation in December 2026. Email is the fastest way to reach me.</p>
+      <dl class="spec">
+        <dt>Email</dt><dd><div class="copyrow"><a id="email" href="mailto:odom.luke1@outlook.com">odom.luke1@outlook.com</a><button class="copy" id="copy" type="button">Copy</button><span class="label" id="copied" aria-live="polite"></span></div></dd>
+        <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/luke-odom25/" rel="noopener">linkedin.com/in/luke-odom25</a></dd>
+        <dt>GitHub</dt><dd><a href="https://github.com/l-odom26" rel="noopener">github.com/l-odom26</a></dd>
+        <dt>Location</dt><dd class="mono">Kennesaw, GA</dd>
+      </dl>
+    </section>
+  </div>
+
+</main>
+
+<footer><span>Luke Odom · Software Engineering · Kennesaw State University</span><span>Kennesaw, GA</span></footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var views = ['home', 'projects', 'experience', 'contact'];
+  var els = {};
+  views.forEach(function (v) { els[v] = document.getElementById('view-' + v); });
+  var navLinks = document.querySelectorAll('[data-nav]');
+
+  function show(v, keepScroll) {
+    if (views.indexOf(v) < 0) v = 'home';
+    views.forEach(function (n) { els[n].hidden = (n !== v); });
+    var el = els[v];
+    el.classList.remove('enter');
+    void el.offsetWidth;
+    el.classList.add('enter');
+    navLinks.forEach(function (a) {
+      if (a.getAttribute('data-nav') === v && a.closest('.nav')) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    if (!keepScroll) window.scrollTo(0, 0);
+  }
+
+  var cards = document.querySelectorAll('.project');
+  var chips = document.querySelectorAll('[data-chip]');
+  var countEl = document.getElementById('count');
+  function applyFilter(tag) {
+    var shown = 0;
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-chip') === tag ? 'true' : 'false'); });
+    cards.forEach(function (card) {
+      var ok = tag === 'all' || card.getAttribute('data-tags').split(' ').indexOf(tag) > -1;
+      card.hidden = !ok;
+      card.classList.remove('pop');
+      if (ok) { shown++; void card.offsetWidth; card.classList.add('pop'); }
+    });
+    countEl.textContent = 'Showing ' + shown + ' of ' + cards.length;
+  }
+
+  document.addEventListener('click', function (e) {
+    var nav = e.target.closest('[data-nav]');
+    if (nav) { e.preventDefault(); show(nav.getAttribute('data-nav')); return; }
+    var chip = e.target.closest('[data-chip]');
+    if (chip) { applyFilter(chip.getAttribute('data-chip')); return; }
+    var skill = e.target.closest('button[data-filter]');
+    if (skill) { applyFilter(skill.getAttribute('data-filter')); show('projects'); }
+  });
+
+  function fromHash() { return (location.hash || '').replace('#', ''); }
+  window.addEventListener('hashchange', function () { show(fromHash()); });
+  show(fromHash(), true);
+
+  /* Theme toggle */
+  var themeBtn = document.getElementById('theme');
+  function current() {
+    return root.getAttribute('data-theme') || (window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+  function label() { themeBtn.textContent = current() === 'dark' ? 'Light mode' : 'Dark mode'; }
+  themeBtn.addEventListener('click', function () {
+    root.setAttribute('data-theme', current() === 'dark' ? 'light' : 'dark');
+    label();
+  });
+  label();
+
+  /* Copy email */
+  var copyBtn = document.getElementById('copy');
+  var copied = document.getElementById('copied');
+  var emailEl = document.getElementById('email');
+  function say(msg) { copied.textContent = msg; setTimeout(function () { copied.textContent = ''; }, 2500); }
+  function selectEmail() {
+    var r = document.createRange();
+    r.selectNodeContents(emailEl);
+    var s = window.getSelection();
+    s.removeAllRanges();
+    s.addRange(r);
+    say('Selected. Press Ctrl/Cmd+C');
+  }
+  copyBtn.addEventListener('click', function () {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(emailEl.textContent).then(function () { say('Copied'); }, selectEmail);
+    } else { selectEmail(); }
+  });
+})();
+</script>
+</body>
+</html>
