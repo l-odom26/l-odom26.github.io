@@ -301,7 +301,7 @@ footer { max-width: 880px; margin: 0 auto; padding-block: 16px 40px; font-family
           <dt>Stack</dt><dd>C, Linux</dd>
           <dt>Highlights</dt><dd><ul>
             <li>Handles 15+ edge cases across piping, redirection and built-ins, and passes 100% of the course test suite.</li>
-            <li>Process control with fork, execvp and waitpid. Chained multi-command pipelines use pipe() and dup2() for correct output.</li>
+            <li>Process control with fork, execvp and waitpid. A pipe between two commands uses pipe() and dup2() to connect one process's output to the next one's input.</li>
           </ul></dd>
           <dt>Source</dt><dd><a href="https://github.com/l-odom26/my-unix-shell" rel="noopener">github.com/l-odom26/my-unix-shell</a></dd>
         </dl>
